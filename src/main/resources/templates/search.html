@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.1/css/bootstrap.min.css}">
+	<title>Posts System</title>
+</head>
+<body class="text-center">
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 10px;">
+  		<a class="navbar-brand" th:href="@{/}">Posts System</a>
+  		<div class="collapse navbar-collapse d-flex justify-content-between" id="conteudoNavbarSuportado">
+    		<ul class="navbar-nav mr-auto">
+    			<li class="nav-item">
+        			<a class="nav-link" th:href="@{/}">Home</a>
+      			</li>
+      			<li class="nav-item">
+        			<a class="nav-link" th:href="@{/{userId}/posts (userId = ${user.id})}">Your Posts</a>
+      			</li>
+      			<li class="nav-item">
+        			<a class="nav-link" th:href="@{/new-post}">New Post</a>
+      			</li>
+      			<li>
+      				<a class="nav-link" th:href="@{/login?logout}">Logout</a>
+      			</li>
+    		</ul>	
+    		<form class="form-group" th:action=@{/search} th:method="post">
+      			<input type="search" name="search" placeholder="Post info" class="form-control" style="display: inline; max-width: 250px; border-radius: 5px 5px 5px 5px;"/>
+				<button type="submit" class="btn btn-outline-warning input-group-append" style="border-radius: 5px 5px 5px 5px; margin: 0 30px 3px 10px">Search</button>
+    		</form>
+  		</div>
+	</nav>
+	<br>
+	<div class="align-items-center">
+		<h1 class="display-5">Posts</h1>
+	</div>
+	<br>
+	<br>
+	<div th:each="post : ${posts}" class="container">
+		<div class="card">
+  			<div class="card-header">
+  				<pre style="margin-bottom: 0px;"><span th:text="${post.author}" style="font-size: 19px;"></span></pre>    
+  				<small th:text="${post.date.getDayOfMonth()}"></small><small>/</small><small th:text="${post.date.getMonthValue()}"></small><small>/</small><small th:text="${post.date.getYear()}"></small>  
+ 				<small th:text="${post.date.getHour()}"></small>:<small th:text="${post.date.getMinute()}"></small>			
+  			</div>
+  			<div class="card-body" style="margin-top: 10px;">
+    			<h5 class="card-title" th:text="${post.title}"></h5>
+    			<p class="card-text text-truncate" th:text="${post.body}" style="max-width: 700px; margin: 15px auto;"></p>
+    			<a th:href="@{/post/{postId} (postId = ${post.id})}" class="btn btn-primary">View more</a>
+  			</div>
+		</div>
+		<br>
+		<br>
+	</div>
+	
+	<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/5.0.1/js/bootstrap.min.js}"></script>
+</body>
+</html>
